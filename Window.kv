@@ -1,0 +1,111 @@
+#:kivy 1.11.0
+<ConnectionInfo>:
+    GridLayout:
+        cols: 2
+        Label:
+            text: 'Address'
+        TextInput:
+            id: addr
+            text: 'ftp.dlptest.com'
+            multiline: False
+        Label:
+            text: 'Username'
+        TextInput:
+            id: user
+            text: 'dlpuser@dlptest.com'
+            multiline: False
+        Label:
+            text: 'Password'
+        TextInput:
+            id: passw
+            text: 'bbCKucPzfr4b9YXUY7tvsNKyh'
+            multiline: False
+            password: True
+        Button:
+            id: connBut
+            text: 'Connect'
+        Button:
+            text: 'Address Book'
+            on_press: root.manager.current = 'AddressBook'
+        Button:
+            text: 'Quit'
+            on_press: app.stop()
+
+<AddressBook>:
+    rows: 2
+    orientation: 'vertical'
+    RecycleView:
+        viewclass: 'SelectableLabel'
+        SelectableRecycleBoxLayout:
+            default_size: None, dp(56)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            multiselect: False
+            touch_multiselect: False
+    GridLayout:
+        cols: 4
+        rows: 4
+        Button:
+            id: bookSave
+            text: 'Save'
+        Button:
+            id: bookDelete
+            text: 'Delete'
+            on_press: root.manager.current = 'Addresses'
+        Button:
+            id: bookSaveNew
+            text: 'Save as New'
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'ConnectionInfo'
+        Label:
+            text: 'Name'
+        TextInput:
+            id: bookName
+            multiline: False
+        Label:
+            text: 'Address'
+        TextInput:
+            id: bookAddr
+            multiline: False
+        Label:
+            text: 'Port'
+        TextInput:
+            id: bookPort
+            multiline: False
+        Label:
+            text: 'Username (optional)'
+        TextInput:
+            id: bookUser
+            multiline: False
+        Label:
+            text: 'Password (optional)'
+        TextInput:
+            id: bookPass
+            multiline: False
+        Label:
+            text: 'Notes'
+        TextInput:
+            id: bookNotes
+            multiline: True
+
+<SelectableLabel>:
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Addresses>:
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False

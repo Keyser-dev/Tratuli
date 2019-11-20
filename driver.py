@@ -1,10 +1,13 @@
-import MainWindow
+import Window
 import globals
 import FTPWrapper as fw
 import LocalWrapper as lw
+import AddressBook as ab
 
 if __name__ == '__main__':
-    MainWindow.Application().run()
+    Window.Application().run()
+
+#------------- CLI -------------
 
 def getInput(message):
     i = input(message)
@@ -97,6 +100,8 @@ ftpmenu = {0 : servInfo,
         5 : menuLocal,
         6 : stop
 }
+
+ab.deserialize()
 
 print("Tratuli - FTP client CLI")
 ftp = fw.createConn()
