@@ -22,11 +22,11 @@ def addEntry(e, conn):
 
 # encodes connections memory object to JSON file
 def serialize(data):
-    with open('data\\connections.json', 'w') as outfile:
+    with open('saved\\connections.json', 'w') as outfile:
         json.dump(data, outfile, ensure_ascii=False)
 
 # decodes JSON file to connections memory object
 def deserialize():
-    with open('data\\connections.json', 'r') as json_file:
+    with open('saved\\connections.json', 'r') as json_file:
         data = json.load(json_file)
     return data

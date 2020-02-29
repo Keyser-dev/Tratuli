@@ -361,4 +361,5 @@ class Application(App):
     # build the application and launch into ScreenManager object
     def build(self):
         self.title = 'Tratuli'
+        self.icon = 'resources\\icon.png'
         return sm
