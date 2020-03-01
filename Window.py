@@ -47,7 +47,7 @@ class MainWindow(Screen):
         self.ids.queueBox.text = queue
         self.ids.localNavBut.bind(on_press=lambda x: self.changeDirLocal())
         self.ids.localUpBut.bind(on_press=lambda x: self.upDirLocal())
-        self.ids.refreshBut.bind(on_press=lambda x: refreshMain())
+        self.ids.refreshBut.bind(on_press=lambda x: Application.refreshMain())
         self.ids.remoteNavBut.bind(on_press=lambda x: self.changeDirRemote())
         self.ids.downloadBut.bind(on_press=lambda x: self.downThread())
         self.ids.uploadBut.bind(on_press=lambda x: self.upThread())
@@ -60,7 +60,7 @@ class MainWindow(Screen):
     # Navigate up one local level
     def upDirLocal(self):
         lw.upLevel()
-        refreshMain()
+        Application.refreshMain()
 
     # Navigate local current working directory to provided
     def changeDirLocal(self):
@@ -73,7 +73,7 @@ class MainWindow(Screen):
             self.ids.queueBox.text = queue
             return
         lw.cwd(localSelected[next(iter(localSelected))]['text'])
-        refreshMain()
+        Application.refreshMain()
 
     # Navigate remote working directory to provided
     def changeDirRemote(self):
@@ -84,7 +84,7 @@ class MainWindow(Screen):
             self.ids.queueBox.text = queue
             return
         fw.nav(ftp, remoteSelected[next(iter(remoteSelected))]['text'])
-        refreshMain()
+        Application.refreshMain()
 
     # create download thread
     def downThread(self):
@@ -109,11 +109,12 @@ class MainWindow(Screen):
 
         for f in downQueue:
             fw.download(ftp, f)
-            refreshMain()
+            Application.refreshMain()
 
         downQueue.clear()
         queue = queue + '\nDownloads complete'
         self.ids.queueBox.text = queue
+        Application.refreshMain()
 
     # create upload queue then upload from it
     def upload(self):
@@ -124,7 +125,7 @@ class MainWindow(Screen):
 
         for f in upQueue:
             fw.upload(ftp, f)
-            refreshMain()
+            Application.refreshMain()
 
         upQueue.clear()
         queue = queue + '\nUploads complete'
@@ -338,14 +339,6 @@ def refreshAddr():
     sm.add_widget(AddressBook(name='AddressBook'))
     sm.current = 'AddressBook'
 
-# refreshes MainWindow screen
-def refreshMain():
-    sm.remove_widget(sm.get_screen(sm.current))
-    localSelected.clear()
-    remoteSelected.clear()
-    sm.add_widget(MainWindow(name='MainWindow'))
-    sm.current = 'MainWindow'
-
 #===================================== Application Prep and Start ================================================
 
 connections = loadAddressBook()
@@ -363,3 +356,11 @@ class Application(App):
         self.title = 'Tratuli'
         self.icon = 'resources\\icon.png'
         return sm
+
+    # refreshes MainWindow screen
+    def refreshMain(*_):
+        sm.remove_widget(sm.get_screen(sm.current))
+        localSelected.clear()
+        remoteSelected.clear()
+        sm.add_widget(MainWindow(name='MainWindow'))
+        sm.current = 'MainWindow'
