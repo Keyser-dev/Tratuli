@@ -13,7 +13,7 @@ want quick basic FTP capability, without any fluff, for raw performance.
 
 ![Tratuli demo](https://github.com/Keyser-dev/Tratuli/blob/master/img/tratuli_demo_1_1_0_mainscreen.png)
 
-## Table of content
+## Table of contents
 
 - [Installation](#installation)
     - [Download](#download)
