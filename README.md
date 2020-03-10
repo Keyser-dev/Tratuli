@@ -2,7 +2,7 @@ Tratuli
 ======================
 ![Tratuli logo](https://github.com/Keyser-dev/Tratuli/blob/master/resources/icon.ico)
 
-[![GitHub release](https://img.shields.io/badge/stable-1.1.0-success)](https://github.com/Keyser-dev/Tratuli/releases)
+[![GitHub release](https://img.shields.io/badge/stable-1.1.1-success)](https://github.com/Keyser-dev/Tratuli/releases)
 [![GitHub stars](https://img.shields.io/github/stars/Keyser-dev/Tratuli)](https://github.com/Keyser-dev/Tratuli/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/Keyser-dev/Tratuli)](https://github.com/Keyser-dev/Tratuli/issues)
 [![GitHub license](https://img.shields.io/github/license/Keyser-dev/Tratuli)](https://github.com/Keyser-dev/Tratuli/blob/master/LICENSE)
@@ -27,11 +27,11 @@ want quick basic FTP capability, without any fluff, for raw performance.
 ## Installation
 
 This document is for the latest Tratuli **stable release** 
-[![GitHub release](https://img.shields.io/badge/stable-1.1.0-success)](https://github.com/Keyser-dev/Tratuli/releases)
+[![GitHub release](https://img.shields.io/badge/stable-1.1.1-success)](https://github.com/Keyser-dev/Tratuli/releases)
 
 ### Download
 
-[![GitHub stable download](https://img.shields.io/badge/-DOWNLOAD%20TRATULI%20INSTALLER-informational?style=for-the-badge)](https://github.com/Keyser-dev/Tratuli/releases/tag/v1.1.0)
+[![GitHub stable download](https://img.shields.io/badge/-DOWNLOAD%20TRATULI%20INSTALLER-informational?style=for-the-badge)](https://github.com/Keyser-dev/Tratuli/releases/tag/v1.1.1)
 
 ### Installer
 
