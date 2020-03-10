@@ -127,7 +127,9 @@
             Button:
                 id: bookBack
                 text: 'Back'
-                on_press: root.manager.current = 'MainWindow'
+                on_press:
+                    root.manager.current = 'MainWindow'
+                    app.refreshMain()
             Label:
                 text: 'Name'
             TextInput:
