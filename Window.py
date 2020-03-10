@@ -7,6 +7,7 @@ import kivy
 import AddressBook as ab
 import LocalWrapper as lw
 import FTPWrapper as fw
+import os
 kivy.require('1.11.0')
 
 from kivy.app import App
@@ -47,7 +48,7 @@ class MainWindow(Screen):
         self.ids.queueBox.text = queue
         self.ids.localNavBut.bind(on_press=lambda x: self.changeDirLocal())
         self.ids.localUpBut.bind(on_press=lambda x: self.upDirLocal())
-        self.ids.refreshBut.bind(on_press=lambda x: refreshMain())
+        self.ids.refreshBut.bind(on_press=lambda x: Application.refreshMain())
         self.ids.remoteNavBut.bind(on_press=lambda x: self.changeDirRemote())
         self.ids.downloadBut.bind(on_press=lambda x: self.downThread())
         self.ids.uploadBut.bind(on_press=lambda x: self.upThread())
@@ -60,7 +61,7 @@ class MainWindow(Screen):
     # Navigate up one local level
     def upDirLocal(self):
         lw.upLevel()
-        refreshMain()
+        Application.refreshMain()
 
     # Navigate local current working directory to provided
     def changeDirLocal(self):
@@ -73,7 +74,7 @@ class MainWindow(Screen):
             self.ids.queueBox.text = queue
             return
         lw.cwd(localSelected[next(iter(localSelected))]['text'])
-        refreshMain()
+        Application.refreshMain()
 
     # Navigate remote working directory to provided
     def changeDirRemote(self):
@@ -84,7 +85,7 @@ class MainWindow(Screen):
             self.ids.queueBox.text = queue
             return
         fw.nav(ftp, remoteSelected[next(iter(remoteSelected))]['text'])
-        refreshMain()
+        Application.refreshMain()
 
     # create download thread
     def downThread(self):
@@ -109,11 +110,12 @@ class MainWindow(Screen):
 
         for f in downQueue:
             fw.download(ftp, f)
-            refreshMain()
+            Application.refreshMain()
 
         downQueue.clear()
         queue = queue + '\nDownloads complete'
         self.ids.queueBox.text = queue
+        Application.refreshMain()
 
     # create upload queue then upload from it
     def upload(self):
@@ -124,7 +126,7 @@ class MainWindow(Screen):
 
         for f in upQueue:
             fw.upload(ftp, f)
-            refreshMain()
+            Application.refreshMain()
 
         upQueue.clear()
         queue = queue + '\nUploads complete'
@@ -148,6 +150,8 @@ class FileLocalLayout(FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout):
 
 # selectable label interaction for local file system
 class FileLocalLabel(RecycleDataViewBehavior, Label):
+    Label = Label(halign="right")
+    Label.bind(size=Label.setter('text_size'))
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
@@ -182,6 +186,11 @@ class FileLocal(RecycleView):
     def __init__(self, **kwargs):
         super(FileLocal, self).__init__(**kwargs)
         curLocalDirList = lw.listDir(lw.currDir())
+        #for index, x in enumerate(curLocalDirList):
+        #    if lw.isFile(x):
+        #        curLocalDirList[index] = x + '  -  ' + str(os.stat(str(lw.currDir() + '\\' + curLocalDirList[index])).st_size) + ' bytes'
+        #    else:
+        #        pass
         self.data.clear()
         self.data = [{'text': str(x)} for x in curLocalDirList]
 
@@ -338,14 +347,6 @@ def refreshAddr():
     sm.add_widget(AddressBook(name='AddressBook'))
     sm.current = 'AddressBook'
 
-# refreshes MainWindow screen
-def refreshMain():
-    sm.remove_widget(sm.get_screen(sm.current))
-    localSelected.clear()
-    remoteSelected.clear()
-    sm.add_widget(MainWindow(name='MainWindow'))
-    sm.current = 'MainWindow'
-
 #===================================== Application Prep and Start ================================================
 
 connections = loadAddressBook()
@@ -363,3 +364,11 @@ class Application(App):
         self.title = 'Tratuli'
         self.icon = 'resources\\icon.png'
         return sm
+
+    # refreshes MainWindow screen
+    def refreshMain(*_):
+        sm.remove_widget(sm.get_screen(sm.current))
+        localSelected.clear()
+        remoteSelected.clear()
+        sm.add_widget(MainWindow(name='MainWindow'))
+        sm.current = 'MainWindow'
